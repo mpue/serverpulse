@@ -79,5 +79,5 @@ CREATE TABLE IF NOT EXISTS audit_log (
 -- Seed default admin (password: changeme)
 -- bcrypt hash for 'changeme' with cost 12
 INSERT INTO users (username, email, password_hash, role)
-VALUES ('admin', 'admin@localhost', '$2a$12$LJ3m4ys3Lk0TSwMCkGKJi.IT5a6GzW3DH8BpCODjfXGMVzr.vCPaG', 'admin')
+VALUES ('admin', 'admin@localhost', '$2a$12$DY9CRf/Rf/E8qjknmAXDqeSOGtajdZ9nBOhtvnTpON2F.7YnlbeQe', 'admin')
 ON CONFLICT (username) DO NOTHING;
