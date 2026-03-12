@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import NotificationCenter from '../NotificationCenter/NotificationCenter';
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
 
 export default function Layout() {
   const user = useAuthStore((s) => s.user);
@@ -33,6 +34,27 @@ export default function Layout() {
             Statistics
           </NavLink>
           {user?.role === 'admin' && (
+            <NavLink to="/servers" className={({ isActive }) => isActive ? 'active' : ''}>
+              Servers
+            </NavLink>
+          )}
+          {user?.role !== 'viewer' && (
+            <NavLink to="/maintenance" className={({ isActive }) => isActive ? 'active' : ''}>
+              Maintenance
+            </NavLink>
+          )}
+          <NavLink to="/reports" className={({ isActive }) => isActive ? 'active' : ''}>
+            Reports
+          </NavLink>
+          {user?.role === 'admin' && (
+            <NavLink to="/webhooks" className={({ isActive }) => isActive ? 'active' : ''}>
+              Webhooks
+            </NavLink>
+          )}
+          <NavLink to="/settings" className={({ isActive }) => isActive ? 'active' : ''}>
+            Settings
+          </NavLink>
+          {user?.role === 'admin' && (
             <NavLink to="/users" className={({ isActive }) => isActive ? 'active' : ''}>
               Users
             </NavLink>
@@ -44,7 +66,10 @@ export default function Layout() {
               <div>{user?.username}</div>
               <div style={{ fontSize: '0.75rem' }}>{user?.role}</div>
             </div>
-            <NotificationCenter />
+            <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+              <ThemeToggle />
+              <NotificationCenter />
+            </div>
           </div>
           <button className="btn btn-ghost btn-sm mt-16" onClick={handleLogout} style={{ width: '100%' }}>
             Logout

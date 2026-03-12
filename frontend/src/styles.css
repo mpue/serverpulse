@@ -1,3 +1,4 @@
+/* Dark theme (default) */
 :root {
   --bg-primary: #0f1117;
   --bg-secondary: #1a1d27;
@@ -11,6 +12,21 @@
   --success: #2ecc71;
   --border: #2e3247;
   --radius: 8px;
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --bg-primary: #f5f6fa;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --text-primary: #1a1d27;
+  --text-secondary: #6b7083;
+  --accent: #3a75e0;
+  --accent-hover: #2b5fc0;
+  --danger: #e74c3c;
+  --warning: #e67e22;
+  --success: #27ae60;
+  --border: #e0e2ea;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -389,3 +405,98 @@ select.form-input {
 .gap-16 { gap: 16px; }
 .mt-16 { margin-top: 16px; }
 .mb-16 { margin-bottom: 16px; }
+
+/* Light theme adjustments */
+[data-theme="light"] .data-table th {
+  background: var(--bg-primary);
+}
+
+[data-theme="light"] .login-card,
+[data-theme="light"] .card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+[data-theme="light"] .form-input {
+  background: #ffffff;
+}
+
+/* ===== Responsive / Mobile ===== */
+
+/* Mobile hamburger */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+}
+
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    z-index: 300;
+    height: 100vh;
+    transition: left 0.25s ease;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 301;
+  }
+
+  .main-content {
+    padding: 60px 12px 12px;
+  }
+
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .drawer {
+    width: 100%;
+  }
+
+  .login-card {
+    width: 90%;
+    padding: 24px;
+  }
+
+  .data-table {
+    font-size: 0.8rem;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 6px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
+}

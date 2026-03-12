@@ -17,6 +17,16 @@ import metricsRouter from './api/metrics';
 import monitorsRouter from './api/monitors';
 import alertsRouter from './api/alerts';
 import usersRouter from './api/users';
+import setupRouter from './api/setup';
+import healthRouter from './api/health';
+import layoutsRouter from './api/dashboardLayouts';
+import serversRouter from './api/servers';
+import maintenanceRouter from './api/maintenanceWindows';
+import reportsRouter from './api/reports';
+import alertCommentsRouter from './api/alertComments';
+import webhooksRouter from './api/webhooks';
+import settingsRouter from './api/settings';
+import { setupGuard } from './middleware/setupGuard';
 
 import { collect as collectProcesses } from './collectors/procCollector';
 import { collect as collectSystem } from './collectors/sysCollector';
@@ -66,18 +76,25 @@ app.use(rateLimit({
 app.use(express.json());
 app.use(cookieParser());
 
+// Setup guard — blocks all routes (except /api/setup, /api/health) until initial admin exists
+app.use(setupGuard);
+
 // API routes
+app.use('/api/setup', setupRouter);
+app.use('/api/health', healthRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/processes', processesRouter);
 app.use('/api/metrics', metricsRouter);
 app.use('/api/monitors', monitorsRouter);
 app.use('/api/alerts', alertsRouter);
 app.use('/api/users', usersRouter);
-
-// Health check
-app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
+app.use('/api/layouts', layoutsRouter);
+app.use('/api/servers', serversRouter);
+app.use('/api/maintenance', maintenanceRouter);
+app.use('/api/reports', reportsRouter);
+app.use('/api/alert-comments', alertCommentsRouter);
+app.use('/api/webhooks', webhooksRouter);
+app.use('/api/settings', settingsRouter);
 
 // Error handler
 app.use(errorHandler);

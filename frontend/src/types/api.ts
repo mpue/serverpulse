@@ -133,3 +133,99 @@ export interface AuditEntry {
   details: string;
   createdAt: string;
 }
+
+// ---------- Extension types ----------
+
+export interface SetupStatus {
+  setupRequired: boolean;
+}
+
+export interface HealthResponse {
+  status: 'ok' | 'degraded' | 'error';
+  version: string;
+  uptime: number;
+  timestamp: string;
+  checks: Record<string, { status: string; latencyMs?: number; message?: string }>;
+}
+
+export interface DashboardLayout {
+  id: number;
+  userId: number;
+  name: string;
+  layout: LayoutWidget[];
+  isDefault: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface LayoutWidget {
+  i: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  type: 'cpu-gauge' | 'memory-donut' | 'disk-bars' | 'network-chart' | 'process-table' | 'metric-chart' | 'alert-feed' | 'top-processes';
+}
+
+export interface Server {
+  id: number;
+  name: string;
+  status: 'online' | 'offline' | 'stale';
+  lastSeenAt: string | null;
+  metadata: Record<string, unknown> | null;
+  createdAt: string;
+  agentToken?: string; // only on creation
+}
+
+export interface MaintenanceWindow {
+  id: number;
+  name: string;
+  startsAt: string;
+  endsAt: string;
+  serverId: number | null;
+  processName: string | null;
+  recurring: string | null;
+  createdBy: number;
+  createdByName?: string;
+  createdAt: string;
+}
+
+export interface ReportSchedule {
+  id: number;
+  name: string;
+  type: string;
+  config: Record<string, unknown>;
+  cronExpr: string;
+  recipients: string[];
+  enabled: boolean;
+  createdAt: string;
+}
+
+export interface AlertComment {
+  id: number;
+  alertEventId: number;
+  userId: number;
+  username?: string;
+  content: string;
+  createdAt: string;
+}
+
+export interface Webhook {
+  id: number;
+  name: string;
+  enabled: boolean;
+  createdAt: string;
+  secret?: string; // only on creation
+}
+
+export interface WebhookEvent {
+  id: number;
+  webhookId: number;
+  webhookName?: string;
+  eventType: string;
+  title: string;
+  description: string | null;
+  severity: string;
+  metadata: Record<string, unknown> | null;
+  createdAt: string;
+}
