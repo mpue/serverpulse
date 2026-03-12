@@ -40,7 +40,7 @@ router.post('/login', loginLimiter, async (req: Request, res: Response): Promise
     }
 
     const payload: JwtPayload = { id: user.id, username: user.username, role: user.role };
-    const accessToken = jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRY });
+    const accessToken = jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRY as string & {} });
 
     const refreshToken = crypto.randomBytes(40).toString('hex');
     const refreshHash = crypto.createHash('sha256').update(refreshToken).digest('hex');
@@ -90,7 +90,7 @@ router.post('/refresh', async (req: Request, res: Response): Promise<void> => {
 
     const user = userResult.rows[0];
     const payload: JwtPayload = { id: user.id, username: user.username, role: user.role };
-    const accessToken = jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRY });
+    const accessToken = jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRY as string & {} });
 
     // Rotate refresh token
     await queries.deleteRefreshToken(hash);
