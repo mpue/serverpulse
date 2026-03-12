@@ -6,7 +6,7 @@ services:
       context: ./frontend
       target: production
     ports:
-      - "80:80"
+      - "4000:4000"
     depends_on:
       - backend
     networks:
@@ -16,8 +16,7 @@ services:
   backend:
     build:
       context: ./backend
-    ports:
-      - "4000:4000"
+    # No ports exposed — backend only reachable via nginx proxy
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -42,7 +41,7 @@ services:
       - SMTP_FROM=${SMTP_FROM}
       - PROC_ROOT=/host/proc
       - PORT=4000
-      - FRONTEND_URL=http://localhost
+      - FRONTEND_URL=http://localhost:4000
     depends_on:
       postgres:
         condition: service_healthy
