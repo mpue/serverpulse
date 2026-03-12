@@ -1,0 +1,80 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      target: production
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - public
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "4000:4000"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_PTRACE
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://serverpulse:${DB_PASSWORD}@postgres:5433/serverpulse
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SMTP_FROM=${SMTP_FROM}
+      - PROC_ROOT=/host/proc
+      - PORT=4000
+      - FRONTEND_URL=http://localhost
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - public
+      - internal
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    # No ports exposed — DB is only reachable via internal network
+    command: ["postgres", "-c", "port=5433"]
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./backend/src/db/migrations:/docker-entrypoint-initdb.d:ro
+    environment:
+      - POSTGRES_DB=serverpulse
+      - POSTGRES_USER=serverpulse
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U serverpulse -p 5433"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+    restart: unless-stopped
+
+networks:
+  public:
+  internal:
+    internal: true    # No outbound internet access
+
+volumes:
+  pg_data:
