@@ -4,8 +4,8 @@ const envSchema = z.object({
   DATABASE_URL: z.string().min(1),
   JWT_SECRET: z.string().min(1),
   JWT_REFRESH_SECRET: z.string().min(1),
-  JWT_EXPIRY: z.string().default('15m'),
-  REFRESH_EXPIRY: z.string().default('7d'),
+  JWT_EXPIRY_SECONDS: z.coerce.number().default(900),      // 15 minutes
+  REFRESH_EXPIRY_SECONDS: z.coerce.number().default(604800), // 7 days
   PROC_ROOT: z.string().default('/proc'),
   COLLECT_INTERVAL_MS: z.coerce.number().default(2000),
   SMTP_HOST: z.string().default(''),
