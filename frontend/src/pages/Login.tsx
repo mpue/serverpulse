@@ -29,6 +29,7 @@ export default function Login() {
   return (
     <div className="login-container">
       <div className="login-card">
+        <img src="/logo.png" alt="ServerPulse" style={{ width: 80, height: 80, display: 'block', margin: '0 auto 16px' }} />
         <h1>ServerPulse</h1>
         <p className="subtitle">Linux Server Monitoring</p>
         {error && <div className="error-text">{error}</div>}

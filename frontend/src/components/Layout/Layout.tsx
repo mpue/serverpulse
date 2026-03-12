@@ -16,7 +16,10 @@ export default function Layout() {
   return (
     <div className="app-layout">
       <aside className="sidebar">
-        <div className="sidebar-logo">ServerPulse</div>
+        <div className="sidebar-logo">
+          <img src="/logo.png" alt="ServerPulse" style={{ width: 32, height: 32, marginRight: 8, verticalAlign: 'middle' }} />
+          ServerPulse
+        </div>
         <nav className="sidebar-nav">
           <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>
             Dashboard

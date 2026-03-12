@@ -1,8 +1,8 @@
 /* Dark theme (default) */
 :root {
-  --bg-primary: #0f1117;
-  --bg-secondary: #1a1d27;
-  --bg-card: #222533;
+  --bg-primary: #010b1d;
+  --bg-secondary: #0a1628;
+  --bg-card: #111d33;
   --text-primary: #e1e4ea;
   --text-secondary: #8b8fa3;
   --accent: #4f8cf7;
