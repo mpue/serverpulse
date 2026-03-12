@@ -13,6 +13,7 @@ const envSchema = z.object({
   SMTP_USER: z.string().default(''),
   SMTP_PASS: z.string().default(''),
   SMTP_FROM: z.string().default('serverpulse@localhost'),
+  AGENT_ENCRYPTION_KEY: z.string().min(16).default('change-me-to-a-secure-random-key-32'),
   PORT: z.coerce.number().default(4000),
   FRONTEND_URL: z.string().default('http://localhost'),
   LOG_LEVEL: z.string().default('info'),

@@ -101,11 +101,14 @@ export const deleteLayout = (id: number) =>
 export const fetchServers = () =>
   apiClient.get<Server[]>('/servers');
 
-export const registerServer = (name: string) =>
-  apiClient.post<Server>('/servers', { name });
+export const registerServer = (name: string, allowedIp?: string) =>
+  apiClient.post<Server>('/servers', { name, allowedIp });
 
-export const updateServer = (id: number, data: { name?: string }) =>
+export const updateServer = (id: number, data: { name?: string; allowedIp?: string | null }) =>
   apiClient.put<Server>(`/servers/${id}`, data);
+
+export const rotateServerSecret = (id: number) =>
+  apiClient.post<{ message: string; agentSecret: string }>(`/servers/${id}/rotate`);
 
 export const deleteServer = (id: number) =>
   apiClient.delete(`/servers/${id}`);

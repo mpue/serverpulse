@@ -10,6 +10,7 @@ import cron from 'node-cron';
 import { env } from './config/env';
 import { errorHandler } from './middleware/errorHandler';
 import { setupLiveStream } from './websocket/liveStream';
+import { setupAgentHub } from './websocket/agentHub';
 
 import authRouter from './api/auth';
 import processesRouter from './api/processes';
@@ -101,6 +102,7 @@ app.use(errorHandler);
 
 // WebSocket
 setupLiveStream(io);
+setupAgentHub(io);
 
 // Collector scheduling
 cron.schedule('*/2 * * * * *', () => {

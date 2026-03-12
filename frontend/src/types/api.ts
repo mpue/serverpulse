@@ -170,11 +170,13 @@ export interface LayoutWidget {
 export interface Server {
   id: number;
   name: string;
-  status: 'online' | 'offline' | 'stale';
+  status: 'online' | 'offline' | 'stale' | 'pending';
   lastSeenAt: string | null;
+  allowedIp: string | null;
+  tokenRotatedAt: string | null;
   metadata: Record<string, unknown> | null;
   createdAt: string;
-  agentToken?: string; // only on creation
+  agentSecret?: string; // only on creation/rotation
 }
 
 export interface MaintenanceWindow {
