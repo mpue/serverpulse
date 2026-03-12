@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getMetrics } from '../api/endpoints';
+import { fetchMetrics } from '../api/endpoints';
 import type { MetricRow } from '../types/api';
 
 export function useMetrics(monitorId: number | null, from?: string, to?: string) {
@@ -10,7 +10,7 @@ export function useMetrics(monitorId: number | null, from?: string, to?: string)
     if (!monitorId) return;
     setLoading(true);
     try {
-      const res = await getMetrics(monitorId, from, to);
+      const res = await fetchMetrics(monitorId, from, to);
       setData(res.data);
     } catch (err) {
       console.error('Failed to fetch metrics:', err);

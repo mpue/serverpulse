@@ -38,7 +38,7 @@ export default function NotificationCenter() {
           {notifications.map((n, i) => (
             <div key={i} style={{ padding: '10px 12px', borderBottom: '1px solid var(--border)', fontSize: '0.85rem' }}>
               <span className={`badge badge-${n.severity || 'warning'}`}>{n.severity}</span>
-              {' '}{n.rule_name} — value: {n.metric_value}
+              {' '}{n.message}
             </div>
           ))}
         </div>
