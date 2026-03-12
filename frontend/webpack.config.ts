@@ -1,8 +1,11 @@
+import { fileURLToPath } from 'url';
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import type { Configuration } from 'webpack';
 import 'webpack-dev-server';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const config: Configuration = {
   entry: './src/index.tsx',
